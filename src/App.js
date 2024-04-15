@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-import { useState,useEffect} from 'react';
+import { useState} from 'react';
 function App() {
   const [cityname, setCity] = useState('');
   const [weatherData, setWeatherData] = useState({});
@@ -18,9 +18,6 @@ function App() {
           console.log(err.message);
        });
     console.log(weatherData);
-  }
-  const out = ()=>{
-
   }
    return (
    <div className='weatherbox'>
