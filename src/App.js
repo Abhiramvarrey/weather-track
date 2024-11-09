@@ -17,7 +17,9 @@ function App() {
   // API Key (consider using environment variables in production)
  const API_KEY = process.env.API_KEY
   // Function to fetch weather by city name
-  const fetchWeatherByCity = (city) => {
+  
+  // Wrapping fetchWeatherByCity in useCallback
+  const fetchWeatherByCity = useCallback((city) => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`)
       .then((response) => {
         if (!response.ok) {
@@ -33,10 +35,10 @@ function App() {
         setError(err.message);
         setWeatherData(null);
       });
-  };
+  }, [API_KEY]); // Only redefined if API_KEY changes
 
-  // Function to fetch weather by coordinates
-  const fetchWeatherByCoords = (lat, lon) => {
+  // Wrapping fetchWeatherByCoords in useCallback
+  const fetchWeatherByCoords = useCallback((lat, lon) => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`)
       .then((response) => response.json())
       .then((data) => {
@@ -46,8 +48,8 @@ function App() {
       .catch((err) => {
         setError(err.message);
       });
-  };
-
+  }, [API_KEY]);
+  
   // Get user's current location
   const getUserLocation = useCallback(() => {
   if (navigator.geolocation) {
