@@ -15,7 +15,7 @@ function App() {
   const [error, setError] = useState(null);
 
   // API Key (consider using environment variables in production)
- const API_KEY = process.env.API_KEY
+  const API_KEY = process.env.REACT_APP_API_KEY;
   // Function to fetch weather by city name
   
   // Wrapping fetchWeatherByCity in useCallback
@@ -128,8 +128,19 @@ useEffect(() => {
         <button onClick={search}>Search</button>
       </div>
 
-      {error && <div className='error-message'>{error}</div>}
-
+      {error && (
+          <div className="error-message">
+            <h3>Error Occurred</h3>
+            <p>{error}</p>
+            <details>
+              <summary>Troubleshooting Tips</summary>
+              <ul>
+                <li>Check your internet connection</li>
+                <li>Verify city name spelling</li>
+              </ul>
+            </details>
+          </div>
+        )}
       {weatherData && (
         <div className='output'>
           <h1>{weatherData.name}, {weatherData.sys?.country}</h1>
