@@ -15,7 +15,7 @@ function App() {
   const [error, setError] = useState(null);
 
   // API Key (consider using environment variables in production)
-
+ const API_KEY
   // Function to fetch weather by city name
   const fetchWeatherByCity = (city) => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`)
