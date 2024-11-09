@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useCallback } from 'react';
 import './styles.css';
 
 import cloudyImage from './assets/cloud.png';
@@ -49,22 +49,24 @@ function App() {
   };
 
   // Get user's current location
-  const getUserLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
-        },
-        (error) => {
-          // If location access is denied, fetch default location
-          fetchWeatherByCity('London');
-        }
-      );
-    } else {
-      // Fallback to default location
-      fetchWeatherByCity('London');
-    }
-  };
+  const getUserLocation = useCallback(() => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
+      },
+      (error) => {
+        fetchWeatherByCity('London');
+      }
+    );
+  } else {
+    fetchWeatherByCity('London');
+  }
+}, [fetchWeatherByCoords, fetchWeatherByCity]); // Add dependencies if required
+
+useEffect(() => {
+  getUserLocation();
+}, [getUserLocation]);
 
   // Search function
   const search = () => {
@@ -103,10 +105,6 @@ function App() {
       day: 'numeric'
     });
   };
-  // Initial load effect
-  useEffect(() => {
-  
-  }, [getUserLocation]);
 
   return (
     <div className='weatherbox'>
