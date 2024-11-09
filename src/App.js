@@ -105,7 +105,7 @@ function App() {
   };
   // Initial load effect
   useEffect(() => {
-    getUserLocation();
+  
   }, [getUserLocation]);
 
   return (
